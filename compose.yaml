@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: email-app
+    container_name: email-service
     image: email-image:latest
     build:
       context: .
