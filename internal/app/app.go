@@ -44,7 +44,10 @@ func Run() error {
 	cache := service.NewMapCache(conf.Cache)
 
 	logrus.Debug("initializing repository...")
-	repo := repo.NewMailRepository(ctx, conf.Postgres)
+	repo, err := repo.NewMailRepository(ctx, conf.Postgres)
+	if err != nil {
+		return fmt.Errorf("error when connecting to the database: %v", err)
+	}
 
 	logrus.Debug("initializing service...")
 	srv := service.NewMailService(cache, repo, conf.SMTP, conf.Code)
