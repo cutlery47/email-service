@@ -7,5 +7,5 @@ import (
 )
 
 func main() {
-	log.Fatal("error: ", app.RunAgent())
+	log.Fatal("error: ", app.Run())
 }
