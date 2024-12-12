@@ -1,0 +1,51 @@
+services:
+  app:
+    container_name: email-app
+    image: email-image:latest
+    build:
+      context: .
+      tags:
+      - "email-image:latest"
+    env_file: '.env'
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    volumes:
+      - './${LOGGER_DIR}:/app/logs'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    container_name: ${POSTGRES_HOST}
+    image: postgres:latest
+    expose:
+      - ${POSTGRES_PORT}
+    env_file: '.env'
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    restart: unless-stopped
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  redis:
+    container_name: ${REDIS_HOST}
+    image: redis:latest
+    expose:
+      - ${REDIS_PORT}
+    env_file: '.env'
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local
