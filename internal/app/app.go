@@ -49,8 +49,19 @@ func Run() error {
 	infoLog := logger.WithFormat(logger.WithFile(logger.New(logrus.InfoLevel), infoFd), &logrus.JSONFormatter{})
 	errLog := logger.WithFormat(logger.WithFile(logger.New(logrus.ErrorLevel), errFd), &logrus.JSONFormatter{})
 
+	var cache service.Cache
+
 	logrus.Debug("initializing cache...")
-	cache := service.NewMapCache(conf.Cache, infoLog)
+	if conf.CacheType == "redis" {
+		cache, err = service.NewRedisCache(ctx, conf.Cache)
+		if err != nil {
+			return fmt.Errorf("error when setting up redis: %v", err)
+		}
+	} else if conf.CacheType == "map" {
+		cache = service.NewMapCache(conf.Cache, infoLog)
+	} else {
+		return fmt.Errorf("valid cache types: redis, map")
+	}
 
 	logrus.Debug("initializing repository...")
 	repo, err := repo.NewMailRepository(ctx, conf.Postgres, infoLog)

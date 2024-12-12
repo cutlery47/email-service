@@ -31,6 +31,7 @@ type Code struct {
 }
 
 type Cache struct {
+	CacheType      string        `env:"CACHE_TYPE"`
 	CleanupTimeout time.Duration `env:"CACHE_CLEANUP_TIMEOUT"`
 	Redis
 }
