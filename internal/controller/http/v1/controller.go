@@ -6,6 +6,8 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/sirupsen/logrus"
 	echoSwagger "github.com/swaggo/echo-swagger"
+
+	_ "github.com/cutlery47/email-service/docs"
 )
 
 func NewController(e *echo.Echo, srv service.Service, infoLog, errLog *logrus.Logger) {

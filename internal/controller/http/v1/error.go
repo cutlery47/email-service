@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"github.com/cutlery47/email-service/internal/repo"
 	"github.com/cutlery47/email-service/internal/service"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
@@ -9,6 +10,7 @@ import (
 var errMap = map[error]*echo.HTTPError{
 	service.ErrCacheNotFound: echo.ErrNotFound,
 	service.ErrWrongCode:     echo.ErrBadRequest,
+	repo.ErrAlreadyExists:    echo.ErrBadRequest,
 }
 
 type errMapper struct {

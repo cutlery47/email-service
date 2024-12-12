@@ -16,6 +16,15 @@ import (
 	"golang.org/x/exp/rand"
 )
 
+//	@title			Email Service
+//	@version		0.0.1
+//	@description	This is an email authentication service
+
+//	@contact.name	Ivanchenko Arkhip
+//	@contact.email	kitchen_cutlery@mail.ru
+
+//	@BasePath	/
+
 func Run() error {
 	rand.Seed(uint64(time.Now().UnixNano()))
 	ctx := context.Background()

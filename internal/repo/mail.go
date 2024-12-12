@@ -15,6 +15,7 @@ import (
 	_ "github.com/golang-migrate/migrate/database/postgres"
 	_ "github.com/golang-migrate/migrate/source/file"
 
+	"github.com/lib/pq"
 	_ "github.com/lib/pq"
 )
 
@@ -84,5 +85,26 @@ func NewMailRepository(ctx context.Context, conf config.Postgres) (*MailReposito
 }
 
 func (mr *MailRepository) Create(ctx context.Context, user models.UserData) error {
+	query := `
+	INSERT INTO 
+		email_schema.users (mail, nickname, firstname, lastname)
+	VALUES 
+		($1, $2, $3, $4);
+	`
+
+	if _, err := mr.db.ExecContext(
+		ctx,
+		query,
+		user.Mail,
+		user.Nickname,
+		user.FirstName,
+		user.LastName,
+	); err != nil {
+		if err.(*pq.Error).Code == "23505" {
+			return ErrAlreadyExists
+		}
+		return fmt.Errorf("%v: %v", err.(*pq.Error).Code, err)
+	}
+
 	return nil
 }

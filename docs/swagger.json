@@ -1,0 +1,141 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is an email authentication service",
+        "title": "Email Service",
+        "contact": {
+            "name": "Ivanchenko Arkhip",
+            "email": "kitchen_cutlery@mail.ru"
+        },
+        "version": "0.0.1"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/v1/confirm": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "Confirm Email",
+                "parameters": [
+                    {
+                        "description": "json",
+                        "name": "json",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_cutlery47_email-service_internal_models.ConfirmationData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "Register User",
+                "parameters": [
+                    {
+                        "description": "json",
+                        "name": "json",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_cutlery47_email-service_internal_models.UserData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "echo.HTTPError": {
+            "type": "object",
+            "properties": {
+                "message": {}
+            }
+        },
+        "github_com_cutlery47_email-service_internal_models.ConfirmationData": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "mail": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_cutlery47_email-service_internal_models.UserData": {
+            "type": "object",
+            "properties": {
+                "firstname": {
+                    "type": "string"
+                },
+                "mail": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "secondname": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

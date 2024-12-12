@@ -5,17 +5,17 @@ import "time"
 // Данные, отправляемые пользователями при регистрации
 // Эти данные заносятся в конечную бд
 type UserData struct {
-	Mail      string `json:"mail"`
-	Nickname  string `json:"nickname"`
-	FirstName string `json:"firstname"`
-	LastName  string `json:"secondname"`
+	Mail      string `json:"mail,omitempty"`
+	Nickname  string `json:"nickname,omitempty"`
+	FirstName string `json:"firstname,omitempty"`
+	LastName  string `json:"secondname,omitempty"`
 }
 
 // Данные, отправляемые пользователями при подверждении регистрации
 // По этим данным мы получаем информацию из временного хранилища
 type ConfirmationData struct {
-	Mail string `json:"mail"`
-	Code string `json:"code"`
+	Mail string `json:"mail,omitempty"`
+	Code string `json:"code,omitempty"`
 }
 
 // Данные, хранящиеся во временном хранилище

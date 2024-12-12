@@ -1,0 +1,25 @@
+{"URI":"/api/v1/register","error":"code=500, message=Internal Server Error","ip":"::1","level":"info","method":"POST","msg":"request","status":500,"time":"2024-12-12T15:23:38+03:00"}
+{"URI":"/api/v1/register","error":"code=500, message=Internal Server Error","ip":"::1","level":"info","method":"POST","msg":"request","status":500,"time":"2024-12-12T15:24:51+03:00"}
+{"URI":"/api/v1/register","error":"code=400, message=mail must not be empty","ip":"::1","level":"info","method":"POST","msg":"request","status":400,"time":"2024-12-12T15:25:35+03:00"}
+{"URI":"/api/v1/register","error":"code=400, message=mail must not be empty","ip":"::1","level":"info","method":"POST","msg":"request","status":400,"time":"2024-12-12T15:25:47+03:00"}
+{"URI":"/api/v1/register","error":"code=400, message=mail must not be empty","ip":"::1","level":"info","method":"POST","msg":"request","status":400,"time":"2024-12-12T15:25:48+03:00"}
+{"URI":"/api/v1/register","error":"code=400, message=mail must not be empty","ip":"::1","level":"info","method":"POST","msg":"request","status":400,"time":"2024-12-12T15:25:56+03:00"}
+{"URI":"/api/v1/register","error":"code=400, message=mail must not be empty","ip":"::1","level":"info","method":"POST","msg":"request","status":400,"time":"2024-12-12T15:26:47+03:00"}
+{"URI":"/api/v1/register","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:27:07+03:00"}
+{"URI":"/api/v1/confirm","error":"code=400, message=code must not be empty","ip":"::1","level":"info","method":"POST","msg":"request","status":400,"time":"2024-12-12T15:27:50+03:00"}
+{"URI":"/api/v1/register","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:28:30+03:00"}
+{"URI":"/api/v1/confirm","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:28:43+03:00"}
+{"URI":"/api/v1/register","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:31:13+03:00"}
+{"URI":"/api/v1/confirm","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:31:27+03:00"}
+{"URI":"/api/v1/register","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:32:14+03:00"}
+{"URI":"/api/v1/confirm","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:32:35+03:00"}
+{"URI":"/api/v1/confirm","error":"code=500, message=Internal Server Error","ip":"::1","level":"info","method":"POST","msg":"request","status":500,"time":"2024-12-12T15:32:39+03:00"}
+{"URI":"/api/v1/confirm","error":"code=404, message=cached data was not found","ip":"::1","level":"info","method":"POST","msg":"request","status":404,"time":"2024-12-12T15:34:06+03:00"}
+{"URI":"/api/v1/register","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:34:15+03:00"}
+{"URI":"/api/v1/confirm","error":"code=500, message=Internal Server Error","ip":"::1","level":"info","method":"POST","msg":"request","status":500,"time":"2024-12-12T15:34:28+03:00"}
+{"URI":"/api/v1/confirm","error":"code=500, message=Internal Server Error","ip":"::1","level":"info","method":"POST","msg":"request","status":500,"time":"2024-12-12T15:34:34+03:00"}
+{"URI":"/api/v1/register","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:35:00+03:00"}
+{"URI":"/api/v1/confirm","error":"code=500, message=Internal Server Error","ip":"::1","level":"info","method":"POST","msg":"request","status":500,"time":"2024-12-12T15:35:13+03:00"}
+{"URI":"/api/v1/confirm","error":"code=500, message=Internal Server Error","ip":"::1","level":"info","method":"POST","msg":"request","status":500,"time":"2024-12-12T15:35:17+03:00"}
+{"URI":"/api/v1/register","error":null,"ip":"::1","level":"info","method":"POST","msg":"request","status":200,"time":"2024-12-12T15:36:25+03:00"}
+{"URI":"/api/v1/confirm","error":"code=400, message=user already exists","ip":"::1","level":"info","method":"POST","msg":"request","status":400,"time":"2024-12-12T15:36:39+03:00"}
