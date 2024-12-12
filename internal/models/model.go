@@ -5,10 +5,10 @@ import "time"
 // Данные, отправляемые пользователями при регистрации
 // Эти данные заносятся в конечную бд
 type UserData struct {
-	Mail      string `json:"mail,omitempty"`
-	Nickname  string `json:"nickname,omitempty"`
-	FirstName string `json:"firstname,omitempty"`
-	LastName  string `json:"secondname,omitempty"`
+	Mail      string `json:"mail,omitempty" redis:"mail"`
+	Nickname  string `json:"nickname,omitempty" redis:"nickname"`
+	FirstName string `json:"firstname,omitempty" redis:"firstname"`
+	LastName  string `json:"secondname,omitempty" redis:"lastname"`
 }
 
 // Данные, отправляемые пользователями при подверждении регистрации
@@ -18,10 +18,15 @@ type ConfirmationData struct {
 	Code string `json:"code,omitempty"`
 }
 
-// Данные, хранящиеся во временном хранилище
-type CachedUserData struct {
+// Данные, получаемые из временного хранилища
+type CachedUserDataOut struct {
 	UserData
-	Code      string        `json:"code"`
-	CreatedAt time.Time     `json:"created_at"`
+	Code string `json:"code" redis:"code"`
+}
+
+// Данные, записываемые во временное хранилище
+type CachedUserDataIn struct {
+	CachedUserDataOut
+	CreatedAt time.Time     `json:"created_at" redis:"created_at"`
 	ValidFor  time.Duration `json:"valid_for"`
 }

@@ -1,15 +1,13 @@
 package app
 
 import (
-	"bufio"
 	"context"
 	"fmt"
-	"os"
+	"log"
 	"time"
 
 	"github.com/cutlery47/email-service/internal/config"
 	"github.com/cutlery47/email-service/internal/models"
-	"github.com/cutlery47/email-service/internal/repo"
 	"github.com/cutlery47/email-service/internal/service"
 	"golang.org/x/exp/rand"
 )
@@ -28,21 +26,41 @@ func RunAgent() error {
 	if err != nil {
 		return fmt.Errorf("error when connecting to redis: %v", err)
 	}
-	repo := repo.NewMockRepository()
-	service := service.NewMailService(cache, repo, conf.SMTP, conf.Code)
 
-	err = service.Register(ctx, models.UserData{Mail: "ortizey47@gmail.com"})
-	if err != nil {
-		return err
+	d := models.UserData{Mail: "ortizey47@gmail.com"}
+	if err := cache.Put(ctx, models.CachedUserDataIn{
+		CachedUserDataOut: models.CachedUserDataOut{
+			UserData: d,
+			Code:     "123123",
+		},
+		CreatedAt: time.Now(),
+		ValidFor:  time.Hour,
+	}); err != nil {
+		log.Println(err)
 	}
 
-	reader := bufio.NewReader(os.Stdin)
-	code, _ := reader.ReadString('\n')
-
-	err = service.Confirm(ctx, models.ConfirmationData{Mail: "ortizey47@gmail.com", Code: code[:len(code)-1]})
+	c, err := cache.Get(ctx, "ortizey47@gmail.com")
 	if err != nil {
-		return err
+		log.Println(err)
 	}
+
+	fmt.Println(c)
+
+	// repo := repo.NewMockRepository()
+	// service := service.NewMailService(cache, repo, conf.SMTP, conf.Code)
+
+	// err = service.Register(ctx, models.UserData{Mail: "ortizey47@gmail.com"})
+	// if err != nil {
+	// 	return err
+	// }
+
+	// reader := bufio.NewReader(os.Stdin)
+	// code, _ := reader.ReadString('\n')
+
+	// err = service.Confirm(ctx, models.ConfirmationData{Mail: "ortizey47@gmail.com", Code: code[:len(code)-1]})
+	// if err != nil {
+	// 	return err
+	// }
 
 	return nil
 }

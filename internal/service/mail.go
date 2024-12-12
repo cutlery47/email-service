@@ -50,14 +50,16 @@ func NewMailService(cache Cache, repo repo.Repository, smtpConf config.SMTP, cod
 func (ms *MailService) Register(ctx context.Context, user models.UserData) error {
 	code := ms.generateCode()
 
-	cached := models.CachedUserData{
-		UserData:  user,
-		Code:      code,
+	cached := models.CachedUserDataIn{
+		CachedUserDataOut: models.CachedUserDataOut{
+			UserData: user,
+			Code:     code,
+		},
 		CreatedAt: time.Now(),
 		ValidFor:  ms.codeConf.TTL,
 	}
 
-	if err := ms.cache.Put(cached); err != nil {
+	if err := ms.cache.Put(ctx, cached); err != nil {
 		return err
 	}
 
@@ -76,7 +78,7 @@ func (ms *MailService) Register(ctx context.Context, user models.UserData) error
 // которые он отправил ранее
 // 3) при совпадении кодов - делаем запись в бд, иначе отправляем ошибку
 func (ms *MailService) Confirm(ctx context.Context, data models.ConfirmationData) error {
-	cached, err := ms.cache.Get(data.Mail)
+	cached, err := ms.cache.Get(ctx, data.Mail)
 	if err != nil {
 		return err
 	}
