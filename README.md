@@ -21,7 +21,6 @@ cd email-service
 
 SMTP_USERNAME               =                   (почта для доступа к SMTP-серверу)
 SMTP_PASSWORD               =                   (пароль для доступа к SMTP-серверу)
-SMTP_RECEIVER               =                   (почта получателя сообщений с SMTP-сервера)
 SMTP_HOSTNAME               =smtp.gmail.com     (адрес SMTP-сервера)
 SMTP_PORT                   =587                (порт SMTP-сервера)
 
@@ -36,7 +35,7 @@ POSTGRES_USER               =postgres           (имя postgres-пользов�
 POSTGRES_PASSWORD           =12345              (пароль postgres-пользователя)
 POSTGRES_HOST               =postgres           (адрес postgres-сервера)
 POSTGRES_PORT               =5432               (порт postgres-сервера)
-POSTGRES_DB                 =auth               (имя postgres-БД)
+POSTGRES_DB                 =email              (имя postgres-БД)
 POSTGRES_TIMEOUT            =5s                 (тайм-аут на подключение к БД)
 POSTGRES_MIGRATIONS         =./migrations       (директория с миграциями для БД)
 
