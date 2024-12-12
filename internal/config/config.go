@@ -52,7 +52,6 @@ type Redis struct {
 	Port     string `env:"REDIS_PORT"`
 	Username string `env:"REDIS_USER"`
 	Password string `env:"REDIS_PASSWORD"`
-	Protocol int    `env:"REDIS_PROTOCOL"`
 }
 
 type Logger struct {
