@@ -12,6 +12,7 @@ type Config struct {
 	Code
 	Cache
 	Postgres
+	Redis
 	Logger
 	HTTPServer
 }
@@ -31,6 +32,7 @@ type Code struct {
 
 type Cache struct {
 	CleanupTimeout time.Duration `env:"CACHE_CLEANUP_TIMEOUT"`
+	Redis
 }
 
 type Postgres struct {
@@ -41,6 +43,15 @@ type Postgres struct {
 	DB         string        `env:"POSTGRES_DB"`
 	Timeout    time.Duration `env:"POSTGRES_TIMEOUT"`
 	Migrations string        `env:"POSTGRES_MIGRATIONS"`
+}
+
+type Redis struct {
+	DB       int    `env:"REDIS_DB"`
+	Host     string `env:"REDIS_HOST"`
+	Port     string `env:"REDIS_PORT"`
+	Username string `env:"REDIS_USER"`
+	Password string `env:"REDIS_PASSWORD"`
+	Protocol int    `env:"REDIS_PROTOCOL"`
 }
 
 type Logger struct {

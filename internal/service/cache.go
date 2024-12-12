@@ -1,11 +1,15 @@
 package service
 
 import (
+	"context"
+	"fmt"
 	"sync"
 	"time"
 
 	"github.com/cutlery47/email-service/internal/config"
 	"github.com/cutlery47/email-service/internal/models"
+	"github.com/redis/go-redis/v9"
+	"github.com/sirupsen/logrus"
 )
 
 // Кэш для хранения данных пользователей до момента подтверждения почты
@@ -18,15 +22,17 @@ type MapCache struct {
 	data map[string]models.CachedUserData
 	mu   *sync.RWMutex
 
-	conf config.Cache
+	conf    config.Cache
+	infoLog *logrus.Logger
 }
 
-func NewMapCache(conf config.Cache) *MapCache {
+func NewMapCache(conf config.Cache, infoLog *logrus.Logger) *MapCache {
 	cache := &MapCache{
 		data: make(map[string]models.CachedUserData),
 		mu:   &sync.RWMutex{},
 
-		conf: conf,
+		conf:    conf,
+		infoLog: infoLog,
 	}
 
 	// запуск очистки кэша
@@ -57,6 +63,7 @@ func (mc *MapCache) Get(mail string) (models.CachedUserData, error) {
 func (mc *MapCache) cleanup() {
 	for {
 		time.Sleep(mc.conf.CleanupTimeout)
+		mc.infoLog.Info("starting cache cleanup")
 
 		mc.mu.Lock()
 		for k, v := range mc.data {
@@ -67,4 +74,47 @@ func (mc *MapCache) cleanup() {
 		}
 		mc.mu.Unlock()
 	}
+}
+
+type RedisCache struct {
+	cl *redis.Client
+
+	conf config.Cache
+}
+
+func NewRedisCache(ctx context.Context, conf config.Cache) (*RedisCache, error) {
+	url := fmt.Sprintf(
+		"redis://%v:%v@%v:%v/%v",
+		conf.Redis.Username,
+		conf.Redis.Password,
+		conf.Redis.Host,
+		conf.Redis.Port,
+		conf.Redis.DB,
+	)
+
+	opt, err := redis.ParseURL(url)
+	if err != nil {
+		return nil, err
+	}
+
+	client := redis.NewClient(opt)
+
+	// пинг на проверку работоспособности
+	pong := client.Ping(ctx)
+	if pong.Err() != nil {
+		return nil, pong.Err()
+	}
+
+	return &RedisCache{
+		cl:   client,
+		conf: conf,
+	}, nil
+}
+
+func (rc *RedisCache) Put(user models.CachedUserData) error {
+	return nil
+}
+
+func (rc *RedisCache) Get(mail string) (models.CachedUserData, error) {
+	return models.CachedUserData{}, nil
 }

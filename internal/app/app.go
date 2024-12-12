@@ -50,10 +50,10 @@ func Run() error {
 	errLog := logger.WithFormat(logger.WithFile(logger.New(logrus.ErrorLevel), errFd), &logrus.JSONFormatter{})
 
 	logrus.Debug("initializing cache...")
-	cache := service.NewMapCache(conf.Cache)
+	cache := service.NewMapCache(conf.Cache, infoLog)
 
 	logrus.Debug("initializing repository...")
-	repo, err := repo.NewMailRepository(ctx, conf.Postgres)
+	repo, err := repo.NewMailRepository(ctx, conf.Postgres, infoLog)
 	if err != nil {
 		return fmt.Errorf("error when connecting to the database: %v", err)
 	}

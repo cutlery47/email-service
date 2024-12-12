@@ -26,10 +26,11 @@ type Repository interface {
 type MailRepository struct {
 	db *sql.DB
 
-	conf config.Postgres
+	conf    config.Postgres
+	infoLog *logrus.Logger
 }
 
-func NewMailRepository(ctx context.Context, conf config.Postgres) (*MailRepository, error) {
+func NewMailRepository(ctx context.Context, conf config.Postgres, infoLog *logrus.Logger) (*MailRepository, error) {
 	url := fmt.Sprintf(
 		"postgresql://%v:%v@%v:%v/%v?sslmode=disable",
 		conf.Username,
@@ -79,11 +80,13 @@ func NewMailRepository(ctx context.Context, conf config.Postgres) (*MailReposito
 	}
 
 	return &MailRepository{
-		db:   db,
-		conf: conf,
+		db:      db,
+		conf:    conf,
+		infoLog: infoLog,
 	}, nil
 }
 
+// создание пользователя в бд
 func (mr *MailRepository) Create(ctx context.Context, user models.UserData) error {
 	query := `
 	INSERT INTO 
@@ -105,6 +108,8 @@ func (mr *MailRepository) Create(ctx context.Context, user models.UserData) erro
 		}
 		return fmt.Errorf("%v: %v", err.(*pq.Error).Code, err)
 	}
+
+	mr.infoLog.Info(fmt.Sprintf("created user: %+v", user))
 
 	return nil
 }

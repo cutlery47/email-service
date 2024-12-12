@@ -23,7 +23,11 @@ func RunAgent() error {
 		return fmt.Errorf("error when setting up config: %v", err)
 	}
 
-	cache := service.NewMapCache(conf.Cache)
+	// cache := service.NewMapCache(conf.Cache, logrus.StandardLogger())
+	cache, err := service.NewRedisCache(ctx, conf.Cache)
+	if err != nil {
+		return fmt.Errorf("error when connecting to redis: %v", err)
+	}
 	repo := repo.NewMockRepository()
 	service := service.NewMailService(cache, repo, conf.SMTP, conf.Code)
 
