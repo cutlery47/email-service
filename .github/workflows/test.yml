@@ -19,7 +19,7 @@ jobs:
                 go-version: '1.23.2'
 
             - name: Install Dependencies
-              run: go mod init && go mod download && go mod verify
+              run: go mod download && go mod verify
 
             - name: Build Go
               run: go build -v ./...
