@@ -12,6 +12,7 @@ import (
 
 func NewController(e *echo.Echo, srv service.Service, infoLog, errLog *logrus.Logger) {
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 
 	// healthcheck
 	e.GET("/ping", func(c echo.Context) error { return c.NoContent(200) })
